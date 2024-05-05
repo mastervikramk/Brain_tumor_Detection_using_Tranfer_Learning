@@ -1,0 +1,88 @@
+<!-- tumor_prediction/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Tumor Diagnosis</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Add custom styles here if needed */
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Brain Tumor Diagnosis</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Upload Image</h5>
+                        <form id="uploadForm" action="{% url 'upload_image' %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="file" id="imageInput" name="image" class="form-control-file mb-3" accept="image/*">
+                            <button type="button" id="diagnoseButton" class="btn btn-primary">Diagnose</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Diagnosis Output</h5>
+                        <div id="diagnosis_output">
+                            <!-- Diagnosis output will be displayed here -->
+                            {% if diagnosis_output %}
+                                {{ diagnosis_output }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto py-3 bg-dark text-white">
+        <div class="container text-center">
+            <span class="text-muted">© 2024 Brain Tumor Diagnosis</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and jQuery (Optional, only if needed) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script>
+        $(document).ready(function() {
+            // Trigger form submission when "Diagnose" button is clicked
+            $('#diagnoseButton').click(function() {
+                $('#uploadForm').submit();
+            });
+        });
+    </script>
+</body>
+</html>
